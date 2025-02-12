@@ -8,13 +8,27 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
+    @ObservedObject var vm:AuthenticationVM
+    
     var body: some View {
-        List {
-            Text("Profile Page Baby")
-        }
+        VStack
+        {
+            List {
+                Button {
+                    vm.logoutAccount()
+                } label: {
+                    Text("Log Out")
+                        .foregroundStyle(.red)
+                }
+            }
+        }.navigationBarBackButtonHidden(true)
+            .navigationDestination(isPresented: $vm.isLogOut) {
+                SignInView()
+            }
     }
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(vm: AuthenticationVM())
 }

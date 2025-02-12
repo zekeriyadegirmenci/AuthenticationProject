@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomButton: View {
     
     var title:String
-    var backgroundColor:Color
+    var backgroundColor:Color?
     var foregroundColor:Color
     var action:() -> Void
     

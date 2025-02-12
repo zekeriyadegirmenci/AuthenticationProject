@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    @ObservedObject var vm:AuthenticationVM
+    @StateObject var vm = AuthenticationVM()
     
     var body: some View {
         VStack(spacing: 20)
@@ -20,9 +20,19 @@ struct SignUpView: View {
             CustomTextField(text: $vm.password, placeholder: "Enter Password", isSecure: true, backgroundColor: .secondary.opacity(0.5), foregroundColor: .primary)
             
             CustomButton(title: "Sign Up", backgroundColor: .accentColor, foregroundColor: .white) {
-//                    action SignIN
+                vm.createAccount()
             }
-        }.padding()
+        }
+        .navigationTitle("Sign Up")
+        .padding()
+        .alert("Message", isPresented: $vm.showAlert) {
+            Button("OK", role: .cancel) {
+            }
+        } message: {
+            Text(vm.errorMessage)
+        }
+        
+        
     }
 }
 

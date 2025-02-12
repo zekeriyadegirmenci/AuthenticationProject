@@ -22,12 +22,15 @@ struct CustomTextField: View {
                 .background(backgroundColor)
                 .foregroundStyle(foregroundColor)
                 .clipShape(.rect(cornerRadius: 10))
+                .textInputAutocapitalization(.never)
         }else{
             TextField(placeholder, text: $text)
                 .padding()
                 .background(backgroundColor)
                 .foregroundStyle(foregroundColor)
                 .clipShape(.rect(cornerRadius: 10))
+                .textInputAutocapitalization(.never)
+                
         }
     }
 }

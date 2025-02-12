@@ -10,6 +10,7 @@ import SwiftUI
 struct SignInView: View {
     
     @StateObject private var vm = AuthenticationVM()
+    @State var showSheet:Bool = false
     
     var body: some View {
         NavigationStack
@@ -21,13 +22,49 @@ struct SignInView: View {
                 CustomTextField(text: $vm.password, placeholder: "Password", isSecure: true, backgroundColor: .secondary.opacity(0.5), foregroundColor: .primary)
                 
                 CustomButton(title: "Log In", backgroundColor: .accentColor, foregroundColor: .white) {
-//                    action SignIN
+                    vm.signInAccount()
+                }.alert("Message", isPresented: $vm.showAlert) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    Text(vm.errorMessage)
+                }
+                
+                
+                Button {
+                    showSheet.toggle()
+                    // Forgot Password sayfasını sheet olarak açıyoruz
+                } label: {
+                    Text("Forgot Password")
+                        .foregroundColor(.blue)
+                }
+                
+                HStack {
+                    Text("Don't have an Account?")
+                        .foregroundStyle(.primary)
+                    
+                    NavigationLink {
+                        SignUpView()
+                        //                        signupa bastıgın anda email ve password sıfırlandı
+                        
+                    } label: {
+                        Text("Sign Up")
+                    }
                 }
             }.padding()
+                .navigationBarBackButtonHidden(true)
+                .navigationTitle("Log In")
+                .sheet(isPresented: $showSheet, content: {
+                    ForgotPasswordView(vm: vm)
+                        .presentationDetents([.fraction(0.5)])
+                })
+                .navigationDestination(isPresented: $vm.isSignedIn) {
+                    ProfileView(vm: vm)
+                }
         }
-
     }
+    
 }
+
 
 #Preview {
     SignInView()
