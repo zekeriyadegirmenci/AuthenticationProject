@@ -29,12 +29,13 @@ final class AuthenticationVM:ObservableObject {
     
 //    user session
     func checkUserSession() {
-        if let _ = Auth.auth().currentUser {
-            // Kullanıcı giriş yapmış, isSignedIn'i true yaptık ve init sayesinde kontrolunu yapıp giris yaptıysa ana sayfadan baslattı
-            self.isSignedIn = true
-        } else {
-            // Kullanıcı giriş yapmamış
-            self.isSignedIn = false
+        do {
+            let authenticatedUser = try authService.getAuthenticatedUser()
+            print(authenticatedUser)
+            self.user = authenticatedUser
+            isSignedIn.toggle() // var olan kullanıcı için oturum güncellenir
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
@@ -62,8 +63,9 @@ final class AuthenticationVM:ObservableObject {
             do {
                 let signInUser = try await authService.signIn(email: email, password: password)
                 self.user = signInUser
+                isSignedIn.toggle( )
                 print("User sign In, uid:\(signInUser.uid)")
-                isSignedIn.toggle()
+                
             } catch {
                 self.errorMessage = error.localizedDescription
                 self.showAlert.toggle()

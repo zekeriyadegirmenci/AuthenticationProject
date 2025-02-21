@@ -35,6 +35,7 @@ actor AuthenticationService {
             let user = UserModel(user: authResult.user)
             
             if authResult.user.isEmailVerified == false {
+                try logOut()
                 throw AuthErrorCode.appNotVerified
             }
             
@@ -63,6 +64,18 @@ actor AuthenticationService {
             print(error.localizedDescription)
             throw error
         }
+    }
+    
+    nonisolated func getAuthenticatedUser() throws -> UserModel {
+        guard let user = Auth.auth().currentUser else {
+            print("Don't get authenticated user")
+            throw URLError(.badServerResponse)
+        }
+//        Eğer ki bunu yapmaz isek, uyarı gosterecek ancak uygulamadan cıkıp girdigimizde girmiş varsayacak. VMdeki usersessiona buradan hata giderse isSignedIn i true yapmaz. Usersessionun amacı kullanıcının girildi bilgisini tutmak.Buradan hata gondermezsek, kullanıcı verify etmeden bir sonrakinde giris yapabilir usersessionu true donecegı ıcın
+        if user.isEmailVerified == false {
+            throw AuthErrorCode.appNotVerified
+        }
+        return UserModel(user: user)
     }
     
     
