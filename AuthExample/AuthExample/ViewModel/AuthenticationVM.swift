@@ -19,7 +19,7 @@ final class AuthenticationVM:ObservableObject {
     @Published var showAlert:Bool = false
     @Published var errorMessage:String = ""
     @Published var isSignedIn:Bool = false
-    @Published var isLogOut:Bool = false
+    
     
     private let authService = AuthenticationService()
     
@@ -87,15 +87,6 @@ final class AuthenticationVM:ObservableObject {
                 self.showAlert.toggle()
                 print("Failed to send password reset email: \(error.localizedDescription)")
             }
-        }
-    }
-    
-    func logoutAccount() {
-        do {
-            try authService.logOut()
-            isLogOut.toggle()
-        } catch {
-            print(error.localizedDescription)
         }
     }
     

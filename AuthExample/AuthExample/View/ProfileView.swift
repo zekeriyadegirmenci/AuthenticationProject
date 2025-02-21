@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @ObservedObject var vm:AuthenticationVM
+    @StateObject private var vm = SettingsVM()
     
     var body: some View {
         VStack
@@ -21,14 +21,28 @@ struct ProfileView: View {
                     Text("Log Out")
                         .foregroundStyle(.red)
                 }
+                
+                Button {
+                    vm.resetPassword()
+                } label: {
+                    Text("Reset Password")
+                        .foregroundStyle(.primary)
+                }
+
             }
         }.navigationBarBackButtonHidden(true)
             .navigationDestination(isPresented: $vm.isLogOut) {
                 SignInView()
             }
+            .alert("Message", isPresented: $vm.showAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(vm.errorMessage)
+            }
+
     }
 }
 
 #Preview {
-    ProfileView(vm: AuthenticationVM())
+    ProfileView()
 }

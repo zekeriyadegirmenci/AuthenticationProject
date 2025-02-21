@@ -58,7 +58,7 @@ struct SignInView: View {
                         .presentationDetents([.fraction(0.5)])
                 })
                 .navigationDestination(isPresented: $vm.isSignedIn) {
-                    ProfileView(vm: vm)
+                    ProfileView()
                 }
         }
     }
