@@ -28,6 +28,13 @@ struct ProfileView: View {
                     Text("Reset Password")
                         .foregroundStyle(.primary)
                 }
+                
+                    Button {
+                        vm.showSheet.toggle()
+                    } label: {
+                        Text("Update Password")
+                            .foregroundStyle(.primary)
+                    }
 
             }
         }.navigationBarBackButtonHidden(true)
@@ -38,6 +45,9 @@ struct ProfileView: View {
                 Button("OK", role: .cancel) { }
             } message: {
                 Text(vm.errorMessage)
+            }
+            .sheet(isPresented: $vm.showSheet) {
+                UpdatePassword(vm: vm)
             }
 
     }

@@ -12,7 +12,12 @@ final class SettingsVM:ObservableObject {
     
     @Published var isLogOut:Bool = false
     @Published var showAlert:Bool = false
+    @Published var showSheet:Bool = false
+    @Published var showAlertForUpdate:Bool = false
     @Published var errorMessage:String = ""
+    @Published var emailForUpdate:String = ""
+    @Published var passwordForUpdate:String = ""
+    @Published var newUpdatedPassword:String = ""
     
     private let authService = AuthenticationService()
     
@@ -40,6 +45,22 @@ final class SettingsVM:ObservableObject {
                 print(error.localizedDescription)
                 self.errorMessage = "An error occurred while resetting your password."
                 showAlert.toggle()
+            }
+        }
+    }
+    
+    func updatePassword() {
+        Task
+        {
+            do {
+                try await authService.reauthenticateAndUpdatePassword(email: emailForUpdate, currentPassword: passwordForUpdate, newPassword: newUpdatedPassword)
+                self.errorMessage = "Updated Password"
+                showAlertForUpdate.toggle()
+                showSheet.toggle()
+            } catch {
+                showAlertForUpdate.toggle()
+                print(error.localizedDescription)
+                self.errorMessage = "An error occurred while updating your password."
             }
         }
     }

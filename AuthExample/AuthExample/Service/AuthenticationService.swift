@@ -78,5 +78,27 @@ actor AuthenticationService {
         return UserModel(user: user)
     }
     
+    func reauthenticateAndUpdatePassword(email: String, currentPassword: String, newPassword: String) async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw URLError(.badServerResponse)
+        }
+        
+        let credential = EmailAuthProvider.credential(withEmail: email, password: currentPassword)
+        
+        do {
+            // Kullanıcıyı yeniden kimlik doğrula
+            try await user.reauthenticate(with: credential)
+            
+            // Kimlik doğrulandıktan sonra şifreyi güncelle
+            try await user.updatePassword(to: newPassword)
+            
+            print("Password successfully updated")
+            
+        } catch {
+            print("Error reauthenticating: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
     
 }
