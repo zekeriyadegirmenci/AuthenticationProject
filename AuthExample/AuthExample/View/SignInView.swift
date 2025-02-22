@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import GoogleSignIn
+import GoogleSignInSwift
 
 struct SignInView: View {
     
@@ -29,6 +31,9 @@ struct SignInView: View {
                     Text(vm.errorMessage)
                 }
                 
+                GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .light, style: .icon, state: .normal)) {
+                    vm.signInGoogle()
+                }
                 
                 Button {
                     showSheet.toggle()

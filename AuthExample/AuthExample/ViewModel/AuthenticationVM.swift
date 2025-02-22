@@ -7,6 +7,9 @@
 
 import Foundation
 import FirebaseAuth
+import GoogleSignIn
+import GoogleSignInSwift
+
 
 @MainActor
 final class AuthenticationVM:ObservableObject {
@@ -63,7 +66,7 @@ final class AuthenticationVM:ObservableObject {
             do {
                 let signInUser = try await authService.signIn(email: email, password: password)
                 self.user = signInUser
-                isSignedIn.toggle( )
+                isSignedIn.toggle()
                 print("User sign In, uid:\(signInUser.uid)")
                 
             } catch {
@@ -89,5 +92,26 @@ final class AuthenticationVM:ObservableObject {
             }
         }
     }
+    
+    func signInGoogle() {
+        Task
+        {
+            do {
+//                tokenleri helperden aldık model seklınde, authservicedeki token yerine yazdık
+                let helper = SignInGoogleHelper()
+                let tokens = try await helper.signIn()
+                print(tokens.name ?? "")
+                print(tokens.email ?? "")
+                //discardable ile düzelttik kullanmadıgımız ıcın hata verıyordu
+                try await AuthenticationService().signInWithGoogle(tokens: tokens)
+                isSignedIn.toggle()
+            } catch  {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    
+    
     
 }
