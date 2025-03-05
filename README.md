@@ -26,7 +26,7 @@ In this project, I developed a basic Authentication app using Firebase Authentic
 
 Below are some screenshots from the app:
 
-| ![Image](https://github.com/user-attachments/assets/59dfc4ab-7efc-4f52-be25-7a0d9358b65e) | ![Image](https://github.com/user-attachments/assets/24920d1b-e9b4-4660-b661-e268c044f747) | ![Image](https://github.com/user-attachments/assets/ad4b19c8-f7c3-48ce-b8f5-d7aad6946a68) | ![Image](https://github.com/user-attachments/assets/585b4fde-a933-42ae-aa6e-8f580e9a71d8) |
+| ![Image](https://github.com/user-attachments/assets/59dfc4ab-7efc-4f52-be25-7a0d9358b65e) | ![Image](https://github.com/user-attachments/assets/24920d1b-e9b4-4660-b661-e268c044f747) | ![Image](https://github.com/user-attachments/assets/3218f2f2-4ca8-4871-96f5-48280a78f62b) | ![Image](https://github.com/user-attachments/assets/585b4fde-a933-42ae-aa6e-8f580e9a71d8) |
 |:------------------------------------------------------------:|:------------------------------------------------------------:|:------------------------------------------------------------:|:------------------------------------------------------------:|
 
 ---
