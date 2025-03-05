@@ -14,6 +14,8 @@ struct UpdatePassword: View {
     var body: some View {
         VStack
         {
+            Text("Update Password")
+                .font(.largeTitle)
             CustomTextField(text: $vm.emailForUpdate, placeholder: "Email", isSecure: false, backgroundColor: .secondary.opacity(0.5), foregroundColor: .primary)
             
             CustomTextField(text: $vm.passwordForUpdate, placeholder: "Old Password", isSecure: true, backgroundColor: .secondary.opacity(0.5), foregroundColor: .primary)
